@@ -44,19 +44,22 @@ namespace piedteam_net1_2_hocmienphi.repository
 
             modelBuilder.Entity<User>(builder =>
             {
-                builder.Property(u => u.Id).IsRequired().IsUnicode();
-                builder.Property(u => u.Email).IsRequired();
-                builder.Property(u => u.FirstName).IsRequired();
-                builder.Property(u => u.LastName).IsRequired();
-                builder.Property(u => u.Role).IsRequired();
+                builder
+                    .HasOne(x => x.Mentor)
+                    .WithOne(x => x.User)
+                    .HasForeignKey<Mentor>(x => x.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
             });
 
             modelBuilder.Entity<Mentor>(builder =>
             {
-                // builder.Property(m => m.Id).;
-                // builder.HasAlternateKey(m => m.Id);
-                // builder.Property(m => m.)
+                builder
+                    .HasMany(x => x.MentorCategories)
+                    .WithOne(x => x.Mentor) //thuộc về 1 mentor
+                    .HasForeignKey(x => x.MentorId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                    
             });
         }
     }

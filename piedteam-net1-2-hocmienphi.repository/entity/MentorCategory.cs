@@ -1,8 +1,9 @@
+using piedteam_net1_2_hocmienphi.repository.abstraction;
+
 namespace piedteam_net1_2_hocmienphi.repository.entity;
 
-public class MentorCategory
+public class MentorCategory : BaseEntity<Guid>
 {
-    public Guid Id  { get; set; } 
     public Mentor Mentor { get; set; }
     public Guid MentorId  { get; set; }
     public Category Category { get; set; }

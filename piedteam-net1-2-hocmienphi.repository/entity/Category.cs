@@ -10,6 +10,7 @@ public class Category : BaseEntity<Guid>
     public Category? Parent { get; set; }
     
     public ICollection<Category> Children { get; set; } //Mảng, Array, List
+    public ICollection<MentorCategory> MentorCategories { get; set; }
     
     // Nhờ khai báo ParentId và Parent,
     // mà Entity Framework sẽ tự động hiểu rằng,

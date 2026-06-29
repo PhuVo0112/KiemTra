@@ -75,9 +75,11 @@ namespace piedteam_net1_2_hocmienphi.repository.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("JobTitle")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Organize")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("UserId")
@@ -85,7 +87,8 @@ namespace piedteam_net1_2_hocmienphi.repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Mentors");
                 });
@@ -115,7 +118,6 @@ namespace piedteam_net1_2_hocmienphi.repository.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .IsUnicode(true)
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")
@@ -154,8 +156,8 @@ namespace piedteam_net1_2_hocmienphi.repository.Migrations
             modelBuilder.Entity("piedteam_net1_2_hocmienphi.repository.entity.Mentor", b =>
                 {
                     b.HasOne("piedteam_net1_2_hocmienphi.repository.entity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Mentor")
+                        .HasForeignKey("piedteam_net1_2_hocmienphi.repository.entity.Mentor", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -165,13 +167,13 @@ namespace piedteam_net1_2_hocmienphi.repository.Migrations
             modelBuilder.Entity("piedteam_net1_2_hocmienphi.repository.entity.MentorCategory", b =>
                 {
                     b.HasOne("piedteam_net1_2_hocmienphi.repository.entity.Category", "Category")
-                        .WithMany()
+                        .WithMany("MentorCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("piedteam_net1_2_hocmienphi.repository.entity.Mentor", "Mentor")
-                        .WithMany()
+                        .WithMany("MentorCategories")
                         .HasForeignKey("MentorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -184,6 +186,19 @@ namespace piedteam_net1_2_hocmienphi.repository.Migrations
             modelBuilder.Entity("piedteam_net1_2_hocmienphi.repository.entity.Category", b =>
                 {
                     b.Navigation("Children");
+
+                    b.Navigation("MentorCategories");
+                });
+
+            modelBuilder.Entity("piedteam_net1_2_hocmienphi.repository.entity.Mentor", b =>
+                {
+                    b.Navigation("MentorCategories");
+                });
+
+            modelBuilder.Entity("piedteam_net1_2_hocmienphi.repository.entity.User", b =>
+                {
+                    b.Navigation("Mentor")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

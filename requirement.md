@@ -60,6 +60,21 @@
 }
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - **Response:** Tạo mới User thành công.
 
 ### 2.2. Lấy danh sách User
